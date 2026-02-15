@@ -30,7 +30,7 @@
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{!empty($item->postBy->name)?$item->postBy->name:false }}</td>
-                    <td><a href="#" class="btn btn-primary">Phân quyền</a></td>
+                    <td><a href="{{route('admin.groups.permission',$item->id)}}" class="btn btn-primary">Phân quyền</a></td>
                     <td><a href="{{route('admin.groups.edit',$item->id)}}" class="btn btn-warning">Sửa</a></td>
                     <td>
                         @if(Auth::user()->id !== $item->id)

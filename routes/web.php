@@ -44,7 +44,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
          Route::post('add',[GroupsController::class,'postadd'])->name('postadd');
          Route::get('edit/{group}',[GroupsController::class,'edit'])->name('edit');
          Route::put('edit/{group}',[GroupsController::class,'update'])->name('update');
-          Route::delete('delete/{user}',[GroupsController::class,'delete'])->name('delete');
+         Route::delete('delete/{group}',[GroupsController::class,'delete'])->name('delete');
+         Route::get('permission/{group}',[GroupsController::class,'permission'])->name('permission');
+         Route::post('permission/{group}',[GroupsController::class,'postpermission']);
     });
     // Quản lý người dùng
     Route::prefix('users')->name('users.')->group(function () {

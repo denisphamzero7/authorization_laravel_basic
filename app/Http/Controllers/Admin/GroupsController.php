@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Groups;
 use Illuminate\Support\Facades\Auth;
-
+use  App\Models\Modules;
 class GroupsController extends Controller
 {
     //
@@ -46,15 +46,15 @@ class GroupsController extends Controller
     public function update(Request $request, Groups $group){
         $request->validate(
             [
-                'name' => 'required|string|unique:groups,name',
+                'name' => 'required|string|unique:groups,name,'.$group->id,
             ],
             [
                 'name.required' => 'Trường :attribute bắt buộc phải nhập',
-                'name.unique' => 'Tên  trùng, vui lòng chọn lại',
+                'name.unique' => 'Tên nhóm đã tồn tại, vui lòng chọn lại',
             ]
         );
         $group->name = $request->name;
-        $group->group_id = $request->group_id;
+        $group->description = $request->description ?? '';
         $group->save();
         return redirect()->route('admin.groups.index')->with('msg','Cập nhật nhóm thành công');
     }
@@ -62,5 +62,35 @@ class GroupsController extends Controller
 
         $group->delete();
         return redirect()->route('admin.groups.index')->with('msg', 'Xóa nhóm thành công.');
+    }
+    public function permission(Groups $group){
+
+        $modules = Modules::all();
+        $roleListArray =[
+            'view'=>'Xem',
+            'add'=>'Thêm',
+            'edit'=>'Sửa',
+            'delete'=>'Xóa',
+        ];
+
+        $roleArr = [];
+        if (!empty($group->permissions)) {
+            $roleArr = json_decode($group->permissions, true);
+
+        }
+
+        return view('admin.groups.permission', compact('group', 'modules', 'roleListArray', 'roleArr'));
+    }
+    public function postpermission(Request $request,Groups $group){
+        if(!empty($request->role)){
+            $roleArr= $request->role;
+        }
+         else{
+            $roleArr=[];
+         }
+         $roleJson =json_encode($roleArr);
+         $group->permissions = $roleJson;
+         $group->save();
+         return back()->with('msg','Cập nhật thành công');
     }
 }

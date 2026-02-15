@@ -12,10 +12,13 @@ function getAllGroups(){
     $groups = new Groups();
     return $groups->getAll();
 }
-function isDoctorActive($email){
-  $count = Doctors::where('email',$email)->where('is_active',1)->count();
-  if ($count>0){
-    return true;
-  }
-  return false;
+
+function isRole($dataArr,$moduleName,$role='view'){
+    // Kiểm tra xem mảng quyền và module có tồn tại không
+    if (!empty($dataArr[$moduleName])) {
+        // Kiểm tra xem quyền đang xét ($role) có nằm trong danh sách các quyền của module đó không
+        return in_array($role, $dataArr[$moduleName]);
+    }
+    // Nếu module không tồn tại trong mảng quyền, trả về false
+    return false;
 }
