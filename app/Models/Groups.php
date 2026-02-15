@@ -14,6 +14,12 @@ class Groups extends Model
        User::class
 
     );}
+
+
+    public function postBy(){
+          return $this->belongsTo(User::class,'user_id','id');
+    }
+
     public function getAll(){
         $groups= DB::table($this->table)
         ->orderBy('name','ASC')

@@ -2,22 +2,22 @@
 @section('title','Danh sách người dùng')
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Danh sách người dùng</h1>
+        <h1 class="h3 mb-0 text-gray-800">Danh sách Nhóm</h1>
     </div>
     @if(session('msg'))
     <div class="alert alert-message">
         {{ session('msg') }}
     </div>
     @endif
-    <p><a href="{{route('admin.users.add')}}" class="btn btn-primary">Thêm mới</a></p>
+    <p><a href="#" class="btn btn-primary">Thêm mới</a></p>
 
     <table class="table table-bordered">
     <thead>
         <tr>
             <th width="5%">STT</th>
             <th>Tên</th>
-            <th>Email</th>
-            <th>Nhóm</th>
+            <th>Người đăng</th>
+            <th width="15%">Phân quyền</th>
             <th width="5%">Sửa</th>
             <th width="5%">Xóa</th>
         </tr>
@@ -29,8 +29,8 @@
                 <tr>
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->email }}</td>
-                    <td>{{ $item->group->name }}</td>
+                    <td>{{!empty($item->postBy->name)?$item->postBy->name:false }}</td>
+                    <td><a href="#" class="btn btn-primary">Phân quyền</a></td>
                     <td><a href="{{route('admin.users.edit',$item->id)}}" class="btn btn-warning">Sửa</a></td>
                     <td>
                         @if(Auth::user()->id !== $item->id)
