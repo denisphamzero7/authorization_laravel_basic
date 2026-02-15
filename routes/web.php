@@ -41,6 +41,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::prefix('groups')->name('groups.')->group(function () {
         Route::get('/',[GroupsController::class,'index'])->name('index');
          Route::get('add',[GroupsController::class,'add'])->name('add');
+         Route::post('add',[GroupsController::class,'postadd'])->name('postadd');
     });
     // Quản lý người dùng
     Route::prefix('users')->name('users.')->group(function () {
