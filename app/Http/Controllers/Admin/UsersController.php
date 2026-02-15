@@ -86,7 +86,13 @@ class UsersController extends Controller
         $user->save();
         return redirect()->route('admin.users.index')->with('msg','Cập nhật người dùng thành công');
     }
-    public function delete(){
-        return "xóa user";
+    public function delete(User $user){
+        // Không cho phép người dùng tự xóa tài khoản của chính họ
+        if (Auth::user()->id === $user->id) {
+            return redirect()->route('admin.users.index')->with('msg', 'Bạn không thể tự xóa chính mình.');
+        }
+
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('msg', 'Xóa người dùng thành công.');
     }
 }

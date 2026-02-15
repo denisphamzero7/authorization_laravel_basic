@@ -32,7 +32,15 @@
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->group->name }}</td>
                     <td><a href="{{route('admin.users.edit',$item->id)}}" class="btn btn-warning">Sửa</a></td>
-                    <td><a href="{{route('admin.users.delete',$item->id)}}" class="btn btn-danger">Xóa</a></td>
+                    <td>
+                        @if(Auth::user()->id !== $item->id)
+                            <form method="POST" action="{{ route('admin.users.delete', $item->id) }}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            </form>
+                        @endif
+                    </td>
                 </tr>
             @empty
                 <tr>
