@@ -36,6 +36,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::prefix('posts')->name('posts.')->group(function () {
         Route::get('/',[PostsController::class,'index'])->name('index');
         Route::get('/add',[PostsController::class,'add'])->name('add');
+        Route::post('add',[PostsController::class,'postadd'])->name('postadd');
+         Route::get('edit/{post}',[PostsController::class,'edit'])->name('edit');
+         Route::put('edit/{post}',[PostsController::class,'update'])->name('update');
+         Route::delete('delete/{post}',[PostsController::class,'delete'])->name('delete');
     });
     // Quản lý nhóm người dùng
     Route::prefix('groups')->name('groups.')->group(function () {

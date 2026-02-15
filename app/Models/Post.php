@@ -17,7 +17,9 @@ class Post extends Model
     */
     // đặt tên table
     protected $table ='posts';
-
+    public function postBy(){
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 
 
 }
