@@ -59,9 +59,12 @@ class GroupsController extends Controller
         return redirect()->route('admin.groups.index')->with('msg','Cập nhật nhóm thành công');
     }
     public function delete(Groups $group){
-
+        $userCount= $group->users->count();
+        if($userCount==0){
         $group->delete();
         return redirect()->route('admin.groups.index')->with('msg', 'Xóa nhóm thành công.');
+        }
+        return redirect()->route('admin.groups.index')->with('msg', 'Trong nhóm vẫn còn :'. $userCount.' người dùng');
     }
     public function permission(Groups $group){
 

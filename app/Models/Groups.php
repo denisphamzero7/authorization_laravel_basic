@@ -11,8 +11,8 @@ class Groups extends Model
 
      public function users(){
     return $this->hasMany(
-       User::class
-
+       User::class,
+       'group_id','id'
     );}
 
 
