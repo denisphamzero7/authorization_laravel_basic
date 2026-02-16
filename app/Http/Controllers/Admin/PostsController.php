@@ -45,6 +45,7 @@ class PostsController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
     public function postedit(Request $request, Post $post){
+        $this->authorize('update',$post);
         $request -> validate(
                 [
                     'title' => 'required|string',
