@@ -33,19 +33,13 @@
                    <td>{{!empty($item->postBy->name)?$item->postBy->name:false }}</td>
                     <td><a href="{{route('admin.posts.edit',$item->id)}}" class="btn btn-warning">Sửa</a></td>
                     <td>
-                        @php
-                            // Lấy quyền của nhóm người dùng đang đăng nhập
-                            $permissions = json_decode(Auth::user()->group->permissions, true);
-                        @endphp
 
-                        {{-- Hiển thị nút xóa nếu người dùng là tác giả HOẶC có quyền xóa bài viết --}}
-                        @if(Auth::id() === $item->user_id || isRole($permissions, 'posts', 'delete'))
-                            <form method="POST" action="{{ route('admin.posts.delete', $item->id) }}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');" style="display: inline-block;">
+                       <form method="POST" action="{{ route('admin.posts.delete', $item->id) }}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                             </form>
-                        @endif
+
                     </td>
                 </tr>
             @empty
