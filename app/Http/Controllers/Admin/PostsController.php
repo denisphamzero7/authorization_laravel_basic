@@ -41,6 +41,7 @@ class PostsController extends Controller
 
     }
     public function edit(Request $request, Post $post){
+        $this->authorize('update',$post);
         return view('admin.posts.edit', compact('post'));
     }
     public function postedit(Request $request, Post $post){

@@ -9,8 +9,10 @@
         {{ session('msg') }}
     </div>
     @endif
+    
+    @can('create', App\Models\Post::class)
     <p><a href="{{route('admin.posts.add')}}" class="btn btn-primary">Thêm mới</a></p>
-
+    @endcan
     <table class="table table-bordered">
     <thead>
         <tr>

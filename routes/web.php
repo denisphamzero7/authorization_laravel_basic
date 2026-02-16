@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 // use App\Http\Controllers\PostController;
 use App\Models\Groups;
+use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 
 
@@ -34,11 +35,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashBoardController::class, 'index'])->name('index');
     // Quản lý bài viết
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
-        Route::get('/',[PostsController::class,'index'])->name('index');
-        Route::get('/add',[PostsController::class,'add'])->name('add');
-        Route::post('add',[PostsController::class,'postadd'])->name('postadd');
-         Route::get('edit/{post}',[PostsController::class,'edit'])->name('edit');
-         Route::put('edit/{post}',[PostsController::class,'update'])->name('update');
+        Route::get('/',[PostsController::class,'index'])->name('index')->can('viewAny',Post::class);
+        Route::get('/add',[PostsController::class,'add'])->name('add')->can('create',Post::class);
+        Route::post('add',[PostsController::class,'postadd'])->name('postadd')->can('create',Post::class);
+         Route::get('edit/{post}',[PostsController::class,'edit'])->name('edit')->can('posts.edit',Post::class);
+         Route::put('edit/{post}',[PostsController::class,'update'])->name('update')->can('posts.edit',Post::class);;
          Route::delete('delete/{post}',[PostsController::class,'delete'])->name('delete');
     });
     // Quản lý nhóm người dùng
