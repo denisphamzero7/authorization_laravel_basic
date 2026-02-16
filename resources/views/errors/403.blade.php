@@ -1,5 +1,8 @@
+@extends('layouts.admin')
+@section('title','Không tìm thấy trang web')
+@section('content')
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Không tìm thấy trang web</h1>
+    </div>
 
-<div style="text-align: center">
-<h1>Bạn không có quyền truy cập trang này</h1>
-    {{$exception->getMessage()}}
-</div>
+@endsection

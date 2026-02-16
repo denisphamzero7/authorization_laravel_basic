@@ -33,7 +33,7 @@ Auth::routes([
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashBoardController::class, 'index'])->name('index');
     // Quản lý bài viết
-    Route::prefix('posts')->name('posts.')->group(function () {
+    Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
         Route::get('/',[PostsController::class,'index'])->name('index');
         Route::get('/add',[PostsController::class,'add'])->name('add');
         Route::post('add',[PostsController::class,'postadd'])->name('postadd');
@@ -53,7 +53,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
          Route::post('permission/{group}',[GroupsController::class,'postpermission']);
     });
     // Quản lý người dùng
-    Route::prefix('users')->name('users.')->group(function () {
+    Route::prefix('users')->name('users.')->middleware('can:users')->group(function () {
         Route::get('/',[UsersController::class,'index'])->name('index');
          Route::get('add',[UsersController::class,'add'])->name('add');
          Route::post('add',[UsersController::class,'postadd'])->name('postadd');

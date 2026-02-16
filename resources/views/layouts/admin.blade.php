@@ -57,6 +57,9 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+            @can('posts')
+
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_posts"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -71,7 +74,7 @@
                     </div>
                 </div>
             </li>
-
+              @endcan
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_groups"
@@ -87,6 +90,7 @@
                     </div>
                 </div>
             </li>
+           @can('users')
              <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users"
                     aria-expanded="true" aria-controls="collapse_users">
@@ -102,6 +106,8 @@
                 </div>
             </li>
 
+
+           @endcan
 
         </ul>
         <!-- End of Sidebar -->

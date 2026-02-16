@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
@@ -40,8 +41,10 @@ class AppServiceProvider extends ServiceProvider
             if(!empty($dateObject)){
                    $dateformat=  $dateObject->format('d/m/Y H:i:s');
                return "<?php echo '$dateformat'; ?>";
-}
 
-});
+     }
+
+     });
+
 }
 }
