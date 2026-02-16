@@ -64,7 +64,7 @@ class PostsController extends Controller
         return redirect()->route('admin.posts.index')->with('msg','Cập nhật thành công');
     }
     public function delete(Post $post){
-
+        $this->authorize('delete', $post);
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('msg', 'Xóa bài viết thành công.');

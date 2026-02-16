@@ -9,7 +9,7 @@
         {{ session('msg') }}
     </div>
     @endif
-    
+
     @can('create', App\Models\Post::class)
     <p><a href="{{route('admin.posts.add')}}" class="btn btn-primary">Thêm mới</a></p>
     @endcan
@@ -20,8 +20,12 @@
             <th>Tiêu đề</th>
             <th>Nội dung</th>
             <th>Tác giả</th>
+            @can('posts.edit')
             <th width="5%">Sửa</th>
+            @endcan
+            @can('posts.delete')
             <th width="5%">Xóa</th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -33,16 +37,21 @@
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->content }}</td>
                    <td>{{!empty($item->postBy->name)?$item->postBy->name:false }}</td>
+                   @can('posts.edit')
                     <td><a href="{{route('admin.posts.edit',$item->id)}}" class="btn btn-warning">Sửa</a></td>
-                    <td>
+                    @endcan
 
+                    <td>
+                        @can('delete',$item)
                        <form method="POST" action="{{ route('admin.posts.delete', $item->id) }}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                             </form>
-
+                        @endcan
                     </td>
+
+
                 </tr>
             @empty
                 <tr>

@@ -57,13 +57,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            if (isRole($roleArr, 'posts', 'delete')) {
-                return true;
-            }
-        }
+      
         return $user->id === $post->user_id;
     }
 

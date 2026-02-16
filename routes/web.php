@@ -39,8 +39,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/add',[PostsController::class,'add'])->name('add')->can('create',Post::class);
         Route::post('add',[PostsController::class,'postadd'])->name('postadd')->can('create',Post::class);
          Route::get('edit/{post}',[PostsController::class,'edit'])->name('edit')->can('posts.edit',Post::class);
-         Route::put('edit/{post}',[PostsController::class,'update'])->name('update')->can('posts.edit',Post::class);;
-         Route::delete('delete/{post}',[PostsController::class,'delete'])->name('delete');
+         Route::put('edit/{post}',[PostsController::class,'update'])->name('update')->can('posts.edit',Post::class);
+         Route::delete('delete/{post}',[PostsController::class,'delete'])->name('delete')->can('posts.delete', 'post');
     });
     // Quản lý nhóm người dùng
     Route::prefix('groups')->name('groups.')->group(function () {
