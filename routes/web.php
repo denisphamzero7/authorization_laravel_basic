@@ -46,9 +46,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::prefix('groups')->name('groups.')->middleware('can:groups')->group(function () {
         Route::get('/',[GroupsController::class,'index'])->name('index');
          Route::get('add',[GroupsController::class,'add'])->name('add')->can('create',Groups::class);
-         Route::post('add',[GroupsController::class,'postadd'])->name('postadd')->can('groups.create',Groups::class);
+         Route::post('add',[GroupsController::class,'postadd'])->name('postadd')->can('create',Groups::class);
          Route::get('edit/{group}',[GroupsController::class,'edit'])->name('edit')->can('groups.edit');
-         Route::put('edit/{group}',[GroupsController::class,'postedit'])->name('postedit');
+         Route::put('edit/{group}',[GroupsController::class,'postedit'])->name('postedit')->can('groups.edit');
          Route::delete('delete/{group}',[GroupsController::class,'delete'])->name('delete')->can('groups.delete');
          Route::get('permission/{group}',[GroupsController::class,'permission'])->name('permission')->can('groups.permission');
          Route::post('permission/{group}',[GroupsController::class,'postpermission'])->name('postpermission')->can('groups.permission');

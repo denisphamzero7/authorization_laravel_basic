@@ -42,15 +42,15 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        $roleJson = $user->group->permissions;
-         if (!empty($roleJson)) {
-             $roleArr = json_decode($roleJson, true);
-             $check = isRole($roleArr, 'users', 'edit');
-             return $check;
-         }
-        // return $user->id === $model->user_id;
+        // $roleJson = $user->group->permissions;
+        //  if (!empty($roleJson)) {
+        //      $roleArr = json_decode($roleJson, true);
+        //      $check = isRole($roleArr, 'users', 'edit');
+        //      return $check;
+        //  }
+        return $user->id === $model->user_id;
 
-        return false;
+        // return false;
     }
 
     /**

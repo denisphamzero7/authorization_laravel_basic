@@ -48,6 +48,7 @@ class GroupPolicy
              return $check;
          }
          return false;
+        //   return $user->id === $group->user_id;
     }
 
     /**
