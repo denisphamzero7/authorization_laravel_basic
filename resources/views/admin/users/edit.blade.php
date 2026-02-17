@@ -7,7 +7,7 @@
     @if($errors->any())
     <div class="alert alert-danger text-center">Vui lòng nhập đủ thông tin</div>
     @endif
-    <form action="{{route('admin.users.update', $user->id)}}" method="post">
+    <form action="{{route('admin.users.edit', $user->id)}}" method="post">
 
         <div class="mb-3">
             <label for="">Tên người dùng</label>

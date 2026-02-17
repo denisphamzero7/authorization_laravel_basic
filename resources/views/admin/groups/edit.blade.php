@@ -9,7 +9,7 @@
     @endif
 
     {{-- Sửa action truyền vào $group --}}
-    <form action="{{route('admin.groups.update', $group)}}" method="post">
+    <form action="{{route('admin.groups.edit', $group)}}" method="post">
         @csrf
         @method('PUT') {{-- Bắt buộc phải có để khớp với Route::put --}}
 

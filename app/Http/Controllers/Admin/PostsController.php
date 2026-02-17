@@ -16,6 +16,7 @@ class PostsController extends Controller
     }
 
     public function add(){
+       
         return view('admin.posts.add');
     }
     public function postadd(Request $request){

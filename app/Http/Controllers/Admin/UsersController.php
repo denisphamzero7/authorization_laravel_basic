@@ -13,7 +13,13 @@ class UsersController extends Controller
     //
 
      public function index(){
-        $lists= User::all();
+         $userId = Auth::user()->id;
+         // if(Auth::user()->user_id==0){
+            $lists= User::all();
+         // }else{
+         //    $lists = User::where('user_id', $userId)->get();
+         // }
+
         return view('admin.users.list',compact('lists'));
     }
 
@@ -54,10 +60,12 @@ class UsersController extends Controller
             return redirect()->route('admin.users.index')->with('msg','thêm thành công');
     }
     public function edit(User $user){
+        $this->authorize('update',$user);
         $groups = Groups::all();
         return view('admin.users.edit', compact('user','groups'));
     }
-    public function update(Request $request, User $user){
+    public function postedit(Request $request, User $user){
+        $this->authorize('update',$user);
         $request -> validate(
             [
                 'name' => 'required|string',
@@ -87,6 +95,7 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index')->with('msg','Cập nhật người dùng thành công');
     }
     public function delete(User $user){
+        $this->authorize('delete',$user);
         // Không cho phép người dùng tự xóa tài khoản của chính họ
         if (Auth::user()->id === $user->id) {
             return redirect()->route('admin.users.index')->with('msg', 'Bạn không thể tự xóa chính mình.');

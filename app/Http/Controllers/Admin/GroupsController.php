@@ -12,15 +12,24 @@ class GroupsController extends Controller
     //
     public function index()
     {
-        $lists = Groups::all();
+         $userId = Auth::user()->id;
+         // if(Auth::user()->user_id==0){
+           $lists = Groups::all();
+         // }else{
+         //    $lists = Groups::where('user_id', $userId)->get();
+         // }
+
         return view('admin.groups.list', compact('lists'));
     }
     public function add()
     {
+        $this->authorize('create', Groups::class);
         return  view('admin.groups.add');
     }
     public function postadd(Request $request)
     {
+        $this->authorize('create', Groups::class);
+
         $request->validate(
             [
                 'name' => 'required|string|unique:groups,name',
@@ -41,9 +50,11 @@ class GroupsController extends Controller
 
     public function edit( Groups $group)
     {
+        $this->authorize('update', $group);
         return  view('admin.groups.edit', compact('group'));
     }
-    public function update(Request $request, Groups $group){
+    public function postedit(Request $request, Groups $group){
+        $this->authorize('update', $group);
         $request->validate(
             [
                 'name' => 'required|string|unique:groups,name,'.$group->id,
@@ -59,6 +70,7 @@ class GroupsController extends Controller
         return redirect()->route('admin.groups.index')->with('msg','Cập nhật nhóm thành công');
     }
     public function delete(Groups $group){
+        $this->authorize('delete', $group);
         $userCount= $group->users->count();
         if($userCount==0){
         $group->delete();
@@ -67,7 +79,7 @@ class GroupsController extends Controller
         return redirect()->route('admin.groups.index')->with('msg', 'Trong nhóm vẫn còn :'. $userCount.' người dùng');
     }
     public function permission(Groups $group){
-
+        $this->authorize('permission', $group);
         $modules = Modules::all();
         $roleListArray =[
             'view'=>'Xem',
@@ -85,6 +97,7 @@ class GroupsController extends Controller
         return view('admin.groups.permission', compact('group', 'modules', 'roleListArray', 'roleArr'));
     }
     public function postpermission(Request $request,Groups $group){
+        $this->authorize('permission', $group);
         if(!empty($request->role)){
             $roleArr= $request->role;
         }

@@ -9,8 +9,10 @@
         {{ session('msg') }}
     </div>
     @endif
+     {{-- dăng kí ở policy --}}
+    @can('create',App\Models\User::class)
     <p><a href="{{route('admin.users.add')}}" class="btn btn-primary">Thêm mới</a></p>
-
+    @endcan
     <table class="table table-bordered">
     <thead>
         <tr>
@@ -18,8 +20,12 @@
             <th>Tên</th>
             <th>Email</th>
             <th>Nhóm</th>
-            <th width="5%">Sửa</th>
+            @can('users.edit')
+             <th width="5%">Sửa</th>
+            @endcan
+            @can('users.delete')
             <th width="5%">Xóa</th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -31,7 +37,10 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->group->name }}</td>
+                    @can('users.edit')
                     <td><a href="{{route('admin.users.edit',$item->id)}}" class="btn btn-warning">Sửa</a></td>
+                    @endcan
+                    @can('users.delete')
                     <td>
                         @if(Auth::user()->id !== $item->id)
                             <form method="POST" action="{{ route('admin.users.delete', $item->id) }}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');" style="display: inline-block;">
@@ -41,6 +50,7 @@
                             </form>
                         @endif
                     </td>
+                    @endcan
                 </tr>
             @empty
                 <tr>

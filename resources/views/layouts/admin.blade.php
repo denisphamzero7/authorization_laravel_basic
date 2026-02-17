@@ -70,12 +70,15 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <a class="collapse-item" href="{{route('admin.posts.index')}}">Danh sách bài viết</a>
+                         @can('create', App\Models\Post::class)
                         <a class="collapse-item" href="{{route('admin.posts.add')}}">Thêm bài viết</a>
+                        @endcan
                     </div>
                 </div>
             </li>
               @endcan
             <!-- Nav Item - Utilities Collapse Menu -->
+            @can('groups')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_groups"
                     aria-expanded="true" aria-controls="collapse_groups">
@@ -86,10 +89,13 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('admin.groups.index')}}">Danh sách nhóm</a>
+                        @can('groups.add')
                         <a class="collapse-item" href="{{route('admin.groups.add')}}">Thêm mới nhóm</a>
+                        @endcan
                     </div>
                 </div>
             </li>
+            @endcan
            @can('users')
              <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users"
