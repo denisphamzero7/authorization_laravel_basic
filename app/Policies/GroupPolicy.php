@@ -13,11 +13,13 @@ class GroupPolicy
      */
     public function viewAny(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'groups');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'groups');
+                return $check;
+            }
         }
         return false;
     }
@@ -27,11 +29,13 @@ class GroupPolicy
      */
     public function create(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'groups', 'add');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'groups', 'add');
+                return $check;
+            }
         }
         return false;
     }
@@ -41,13 +45,15 @@ class GroupPolicy
      */
     public function update(User $user, Groups $group): bool
     {
-        $roleJson = $user->group->permissions;
-         if (!empty($roleJson)) {
-             $roleArr = json_decode($roleJson, true);
-             $check = isRole($roleArr, 'groups', 'edit');
-             return $check;
-         }
-         return false;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+             if (!empty($roleJson)) {
+                 $roleArr = json_decode($roleJson, true);
+                 $check = isRole($roleArr, 'groups', 'edit');
+                 return $check;
+             }
+        }
+        return false;
         //   return $user->id === $group->user_id;
     }
 
@@ -56,22 +62,26 @@ class GroupPolicy
      */
     public function delete(User $user, Groups $group): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'groups', 'delete');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'groups', 'delete');
+                return $check;
+            }
         }
-         return false;
+        return false;
     }
     //phân quyền
     public function permission(User $user, Groups $group): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'groups', 'permission');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'groups', 'permission');
+                return $check;
+            }
         }
         return false;
     }

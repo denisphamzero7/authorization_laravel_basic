@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
 class PostSeeder extends Seeder
@@ -14,11 +14,19 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
+        $userIds = DB::table('users')->pluck('id')->toArray();
 
-        for ($i = 0; $i < 20; $i++) {
-            Post::create([
-                'title' => $faker->sentence,
-                'content' => $faker->paragraph,
+        if (empty($userIds)) {
+            return;
+        }
+
+        for ($i = 1; $i <= 30; $i++) {
+            DB::table('posts')->insert([
+                'title' => $faker->sentence(),
+                'content' => $faker->paragraphs(3, true),
+                'user_id' => $faker->randomElement($userIds),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

@@ -51,47 +51,57 @@ class AuthServiceProvider extends ServiceProvider
          if($modulesList->count()>0) {
             foreach ($modulesList as $module){
                 Gate::define($module->name,function (User $user) use ($module)  {
-                      $roleJson= $user->group->permissions;
-                      if(!empty($roleJson)){
-                        $roleArr= json_decode($roleJson,true);
-                        $check= isRole($roleArr,$module->name);
-                        return $check;
+                      if ($user->group) {
+                          $roleJson= $user->group->permissions;
+                          if(!empty($roleJson)){
+                            $roleArr= json_decode($roleJson,true);
+                            $check= isRole($roleArr,$module->name);
+                            return $check;
+                          }
                       }
                       return false;
                 });
                  Gate::define($module->name.'.add',function (User $user) use ($module)  {
-                      $roleJson= $user->group->permissions;
-                      if(!empty($roleJson)){
-                        $roleArr= json_decode($roleJson,true);
-                        $check= isRole($roleArr,$module->name,'add');
-                        return $check;
+                      if ($user->group) {
+                          $roleJson= $user->group->permissions;
+                          if(!empty($roleJson)){
+                            $roleArr= json_decode($roleJson,true);
+                            $check= isRole($roleArr,$module->name,'add');
+                            return $check;
+                          }
                       }
                       return false;
                 });
                 Gate::define($module->name.'.edit',function (User $user) use ($module)  {
-                      $roleJson= $user->group->permissions;
-                      if(!empty($roleJson)){
-                        $roleArr= json_decode($roleJson,true);
-                        $check= isRole($roleArr,$module->name,'edit');
-                        return $check;
+                      if ($user->group) {
+                          $roleJson= $user->group->permissions;
+                          if(!empty($roleJson)){
+                            $roleArr= json_decode($roleJson,true);
+                            $check= isRole($roleArr,$module->name,'edit');
+                            return $check;
+                          }
                       }
                       return false;
                 });
                 Gate::define($module->name.'.delete',function (User $user) use ($module)  {
-                      $roleJson= $user->group->permissions;
-                      if(!empty($roleJson)){
-                        $roleArr= json_decode($roleJson,true);
-                        $check= isRole($roleArr,$module->name,'delete');
-                        return $check;
+                      if ($user->group) {
+                          $roleJson= $user->group->permissions;
+                          if(!empty($roleJson)){
+                            $roleArr= json_decode($roleJson,true);
+                            $check= isRole($roleArr,$module->name,'delete');
+                            return $check;
+                          }
                       }
                       return false;
                 });
                 Gate::define($module->name.'.permission',function (User $user) use ($module)  {
-                      $roleJson= $user->group->permissions;
-                      if(!empty($roleJson)){
-                        $roleArr= json_decode($roleJson,true);
-                        $check= isRole($roleArr,$module->name,'permission');
-                        return $check;
+                      if ($user->group) {
+                          $roleJson= $user->group->permissions;
+                          if(!empty($roleJson)){
+                            $roleArr= json_decode($roleJson,true);
+                            $check= isRole($roleArr,$module->name,'permission');
+                            return $check;
+                          }
                       }
                       return false;
                 });

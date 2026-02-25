@@ -28,11 +28,13 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'users', 'add');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'users', 'add');
+                return $check;
+            }
         }
         return false;
     }
@@ -42,14 +44,14 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        $roleJson = $user->group->permissions;
-         if (!empty($roleJson)) {
-             $roleArr = json_decode($roleJson, true);
-             $check = isRole($roleArr, 'users', 'edit');
-             return $check;
-         }
-
-
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'users', 'edit');
+                return $check;
+            }
+        }
         return false;
     }
 
@@ -58,13 +60,14 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        $roleJson = $user->group->permissions;
-         if (!empty($roleJson)) {
-             $roleArr = json_decode($roleJson, true);
-             $check = isRole($roleArr, 'users', 'delete');
-             return $check;
-         }
-        // return $user->id === $model->user_id;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'users', 'delete');
+                return $check;
+            }
+        }
         return false;
     }
 

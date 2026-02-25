@@ -13,11 +13,13 @@ class PostPolicy
      */
     public function viewAny(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'posts');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'posts');
+                return $check;
+            }
         }
         return false;
     }
@@ -35,11 +37,13 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $roleArr = json_decode($roleJson, true);
-            $check = isRole($roleArr, 'posts', 'add');
-            return $check;
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                $check = isRole($roleArr, 'posts', 'add');
+                return $check;
+            }
         }
         return false;
     }
@@ -49,7 +53,19 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-         return $user->id === $post->user_id;
+        if ($user->id === $post->user_id) {
+            return true;
+        }
+
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                return isRole($roleArr, 'posts', 'edit');
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -57,8 +73,19 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-      
-        return $user->id === $post->user_id;
+        if ($user->id === $post->user_id) {
+            return true;
+        }
+
+        if ($user->group) {
+            $roleJson = $user->group->permissions;
+            if (!empty($roleJson)) {
+                $roleArr = json_decode($roleJson, true);
+                return isRole($roleArr, 'posts', 'delete');
+            }
+        }
+
+        return false;
     }
 
     /**
